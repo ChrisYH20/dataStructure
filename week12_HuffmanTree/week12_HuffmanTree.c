@@ -2,18 +2,21 @@
 #include <stdlib.h>
 #include <string.h>
 
+// 定义赫夫曼树节点的结构体
 typedef struct {
-    int weight;
-    int parent, lchild, rchild;
-    char *code;  // 用于存储赫夫曼编码
+    int weight;         // 权值
+    int parent, lchild, rchild; // 父节点、左子节点、右子节点的下标
+    char *code;          // 用于存储赫夫曼编码
 } HTNode, *HuffmanTree;
 
 // 构建赫夫曼树
 void buildHuffmanTree(HuffmanTree ht, int n) {
+    // 初始化所有节点的父节点、左子节点、右子节点为-1
     for (int i = 0; i < 2 * n - 1; ++i) {
         ht[i].parent = ht[i].lchild = ht[i].rchild = -1;
     }
 
+    // 构建赫夫曼树的非叶子节点
     for (int i = n; i < 2 * n - 1; ++i) {
         int min1 = -1, min2 = -1;
 
@@ -46,8 +49,10 @@ void generateHuffmanCode(HuffmanTree ht, int n) {
         // 从叶子结点向上回溯，生成编码
         while (parent != -1) {
             if (ht[parent].lchild == current) {
+                // 左子节点为0
                 ht[i].code = strcat(strdup("0"), ht[i].code);
             } else {
+                // 右子节点为1
                 ht[i].code = strcat(strdup("1"), ht[i].code);
             }
             current = parent;
@@ -65,9 +70,11 @@ void printHuffmanTree(HuffmanTree ht, int n) {
 }
 
 int main() {
+    // 给定的权值数组
     int weights[] = {5, 29, 7, 8, 14};
     int n = sizeof(weights) / sizeof(weights[0]);
 
+    // 分配赫夫曼树节点的内存空间
     HuffmanTree ht = (HuffmanTree)malloc(sizeof(HTNode) * (2 * n - 1));
 
     // 初始化节点权值
@@ -76,10 +83,16 @@ int main() {
         ht[i].code = "";
     }
 
+    // 构建赫夫曼树
     buildHuffmanTree(ht, n);
+    
+    // 生成赫夫曼编码
     generateHuffmanCode(ht, n);
+    
+    // 打印赫夫曼树信息和编码
     printHuffmanTree(ht, n);
 
+    // 释放分配的内存空间
     free(ht);
 
     return 0;
