@@ -118,7 +118,7 @@ int main() {
     printf("\n");
     int array2[]={1,4,9, 5,6,7,8,2,3};
     heapSort(array2,9);
-    printf("插入排序后的数组为：");
+    printf("堆排序后的数组为：");
     for (int i = 0; i < 9; ++i) {
         printf("%d  ",array2[i]);
     }
